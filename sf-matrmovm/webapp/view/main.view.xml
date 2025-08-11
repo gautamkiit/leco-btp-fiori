@@ -1,6 +1,7 @@
-<mvc:View controllerName="leco.sfmatrmovm.controller.main"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="leco.sfmatrmovm.controller.main">
     <Page id="page" title="{i18n>title}">
+    <content>
+        <Label text="Welcome to SAP BAS and Git Integration" width="100%" id="label0"/>
+    </content>
     </Page>
 </mvc:View>
