@@ -1,0 +1,93 @@
+_schema-version: "3.2"
+ID: leco-btp-fiori
+version: 0.0.1
+modules:
+- name: leco-btp-fiori-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: leco-btp-fiori-destination-service
+    parameters:
+      content-target: true
+  - name: leco-btp-fiori_html_repo_host
+    parameters:
+      service-key:
+        name: leco-btp-fiori_html_repo_host-key
+  - name: uaa_leco-btp-fiori
+    parameters:
+      service-key:
+        name: uaa_leco-btp-fiori-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: com_le_btp_leco_btp_fiori_html_repo_host
+          ServiceInstanceName: leco-btp-fiori-html5-app-host-service
+          ServiceKeyName: leco-btp-fiori_html_repo_host-key
+          sap.cloud.service: com.le.btp
+        - Authentication: OAuth2UserTokenExchange
+          Name: com_le_btp_uaa_leco_btp_fiori
+          ServiceInstanceName: leco-btp-fiori-xsuaa-service
+          ServiceKeyName: uaa_leco-btp-fiori-key
+          sap.cloud.service: com.le.btp
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: leco-btp-fiori-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: leco-btp-fiori_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - lecosfmatrmovm.zip
+      name: lecosfmatrmovm
+      target-path: resources/
+- name: lecosfmatrmovm
+  type: html5
+  path: sf-matrmovm
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: leco-btp-fiori-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: leco-btp-fiori-destination-service
+    service-plan: lite
+- name: leco-btp-fiori_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: leco-btp-fiori-html5-app-host-service
+    service-plan: app-host
+- name: uaa_leco-btp-fiori
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: leco-btp-fiori-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
