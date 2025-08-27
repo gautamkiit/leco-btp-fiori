@@ -7,12 +7,20 @@
         <columns>
           <Column id="col01"><Text id="txt11" text="Username" /></Column>
           <Column id="col02"><Text id="txt12" text="Email" /></Column>
+          <Column id="col03"><Text id="txt13" text="Origin-Key" /></Column>
+          <Column id="col04"><Text id="txt14" text="Given-Name" /></Column>
+          <Column id="col05"><Text id="txt15" text="Family-Name" /></Column>
+          <Column id="col06"><Text id="txt16" text="ID" /></Column>
         </columns>
         <items>
           <ColumnListItem id="colitm01">
             <cells>
               <Text id="txt01" text="{users>userName}" />
               <Text id="txt02" text="{users>emails/0/value}" />
+              <Text id="txt03" text="{users>origin}" />
+              <Text id="txt04" text="{users>name/givenName}" />
+              <Text id="txt05" text="{users>name/familyName}" />
+              <Text id="txt06" text="{users>id}" />
             </cells>
           </ColumnListItem>
         </items>
