@@ -46,9 +46,23 @@ modules:
       - lecosfmatrmovm.zip
       name: lecosfmatrmovm
       target-path: resources/
+    - artifacts:
+      - lecosausermgt.zip
+      name: lecosausermgt
+      target-path: resources/
 - name: lecosfmatrmovm
   type: html5
   path: sf-matrmovm
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: lecosausermgt
+  type: html5
+  path: sa-user-mgt
   build-parameters:
     build-result: dist
     builder: custom

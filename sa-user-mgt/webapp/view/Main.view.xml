@@ -1,0 +1,22 @@
+<mvc:View controllerName="leco.sausermgt.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <content>
+      <Table id="table01" items="{users>/}">
+        <columns>
+          <Column id="col01"><Text id="txt11" text="Username" /></Column>
+          <Column id="col02"><Text id="txt12" text="Email" /></Column>
+        </columns>
+        <items>
+          <ColumnListItem id="colitm01">
+            <cells>
+              <Text id="txt01" text="{users>userName}" />
+              <Text id="txt02" text="{users>emails/0/value}" />
+            </cells>
+          </ColumnListItem>
+        </items>
+      </Table>
+    </content>
+    </Page>
+</mvc:View>
